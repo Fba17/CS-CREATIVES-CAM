@@ -19,10 +19,18 @@ npm run test:ui       # Playwright UI-Mode (empfohlen zum Debuggen)
 npm run report        # letzten HTML-Report öffnen
 ```
 
-## Testdatei
+## Struktur
 
+Die Tests folgen dem Page-Object-Model-Pattern:
+
+- `pages/BerufeTvStartPage.ts` — Page Object für die Startseite (Laden,
+  Suche, Video-Kacheln).
+- `pages/CookieBanner.ts` — Component Object für das Cookie-/Consent-Banner.
+- `pages/VideoPlayer.ts` — Component Object für den Videoplayer (abspielen,
+  Play-Status prüfen).
 - `tests/berufetv.spec.ts` — Smoke-Test (Seite lädt), Suche, Video abspielen.
-- `tests/helpers.ts` — Hilfsfunktion zum Wegklicken des Cookie-Banners.
+  Die Tests selbst enthalten keine Selektoren mehr, sondern rufen nur noch
+  Methoden der Page Objects auf.
 
 ## Wichtiger Hinweis
 
