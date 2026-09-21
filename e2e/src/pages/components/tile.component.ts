@@ -10,7 +10,12 @@ import { Locator, Page, expect } from '@playwright/test';
  *    visibility/hidden state.
  */
 export type TileLocators = {
-  kachel: string;
+  /**
+   * Optional: a few tiles (`andereHilfreicheAnwendungen.serviceLink_0{1..4}Tile`)
+   * have no dedicated container — only `link`/`text`. For those, `link`
+   * itself is used as the visibility anchor (see `kachel` getter below).
+   */
+  kachel?: string;
   titel?: string;
   text?: string;
   link?: string;
@@ -65,8 +70,13 @@ export class Tile {
     private readonly locators: TileLocators
   ) {}
 
+  /** The tile's visibility anchor: its own `kachel`, or `link` when there's no dedicated container. */
   get kachel(): Locator {
-    return this.page.locator(this.locators.kachel);
+    const selector = this.locators.kachel ?? this.locators.link;
+    if (!selector) {
+      throw new Error('Tile has neither "kachel" nor "link" locator configured');
+    }
+    return this.page.locator(selector);
   }
 
   async expectVisible(): Promise<void> {

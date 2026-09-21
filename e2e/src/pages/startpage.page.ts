@@ -4,14 +4,8 @@ import { NewsTile } from './components/news-tile.component';
 import { Tile } from './components/tile.component';
 
 /**
- * NOTE (staged transcription): this locator map was transcribed from
- * screenshots. Everything below is faithful to what was captured, but
- * two gaps remain, marked inline:
- *  - the tail of `weitereInteressanteBereiche` (a "servicelinks" related
- *    section referencing `ba-berufetv-servicelinks//article` was visible
- *    at the very edge of a screenshot, but its full shape wasn't captured)
- *  - nothing else is known to be missing.
- * Do not treat this file as 100% ground truth until that gap is filled in.
+ * Transcribed from screenshots of the real `startpage.page.ts`. As far as
+ * `startseite.spec.ts` exercises it, this map is now complete.
  */
 export const STARTPAGE_PAGE = {
   cookiesDisclaimer: {
@@ -92,19 +86,32 @@ export const STARTPAGE_PAGE = {
         text: 'xpath=//*[@id="rund_um_den_Berufsalltag"]//p',
         bild: 'xpath=//*[@id="rund_um_den_Berufsalltag"]//IMG[@class="ba-image"]',
       },
-      // TODO(transcription-gap): `startseite.spec.ts` confirms a further
-      // tile here, `beruflicheIdeenUndImpulseSchmalTile` (kachel, titel,
-      // titel_fuerReihenfolge, text, bild — same shape as its siblings
-      // above), but its raw locator strings weren't captured. Add it here
-      // once available; DO NOT guess the xpath/id strings.
+      beruflicheIdeenUndImpulseSchmalTile: {
+        kachel: '#weitere_inspirationen',
+        titel: 'xpath=//*[@id="weitere_inspirationen"]//h3',
+        titel_fuerReihenfolge: 'xpath=(//ba-berufetv-narrow-image-tile//H3)[6]',
+        text: 'xpath=//*[@id="weitere_inspirationen"]//p',
+        bild: 'xpath=//*[@id="weitere_inspirationen"]//IMG[@class="ba-image"]',
+      },
     },
-    // TODO(transcription-gap): a section (name unconfirmed, e.g.
-    // `andereHilfreicheAnwendungen`) sits here with a `sektionUeberschrift`
-    // and at least 4 `serviceLink_0{1..4}Tile` entries (each only `link` +
-    // `text`, no `kachel`/`titel`/`bild`) — confirmed by
-    // `startseite.spec.ts` usage of `serviceLink_01Tile` and by a
-    // `link: 'xpath=(//ba-berufetv-servicelinks//article)[4]/a'` fragment
-    // seen at a screenshot edge. Add it here once available.
+    andereHilfreicheAnwendungen: {
+      sektionUeberschrift: '#otherapps-section-heading',
+      serviceLink_01Tile: {
+        link: 'xpath=(//ba-berufetv-servicelinks//article)[1]//a',
+        text: 'xpath=(//ba-berufetv-servicelinks//article)[1]//div/p',
+      },
+      serviceLink_02Tile: {
+        link: 'xpath=(//ba-berufetv-servicelinks//article)[2]//a',
+        text: 'xpath=(//ba-berufetv-servicelinks//article)[2]//div/p',
+      },
+      serviceLink_03Tile: {
+        link: 'xpath=(//ba-berufetv-servicelinks//article)[3]//a',
+        text: 'xpath=(//ba-berufetv-servicelinks//article)[3]//div/p',
+      },
+      serviceLink_04Tile: {
+        link: 'xpath=(//ba-berufetv-servicelinks//article)[4]//a',
+      },
+    },
     unsereServices: {
       sektionUeberschrift: '#footer-section-heading',
       berufsberatungTile: {
@@ -137,14 +144,14 @@ export const STARTPAGE_PAGE = {
 /**
  * Page object for the berufe.TV start page (`/berufetv/start`).
  *
- * Exposes `Tile` components for every kachel currently exercised by
+ * Exposes `Tile` components for every kachel exercised by
  * `startseite.spec.ts` (the "@smoke 01" content test and the "@smoke 02"
- * order test, via `Tile.expectOrderLabel`), plus `unsereServices`
- * (`berufsberatungTile`/`azubiWeltTile` fit the generic `Tile`;
- * `newsTile` gets the dedicated `NewsTile` component for its list of
- * numbered links). `andereHilfreicheAnwendungen` and
- * `beruflicheIdeenUndImpulseSchmalTile` can't be wrapped yet since their
- * locators weren't captured (see TODO above).
+ * order test, via `Tile.expectOrderLabel`), including `unsereServices`
+ * (`berufsberatungTile`/`azubiWeltTile` fit the generic `Tile`; `newsTile`
+ * gets the dedicated `NewsTile` component for its list of numbered links)
+ * and `andereHilfreicheAnwendungen`'s `serviceLink_0{1..4}Tile` (which
+ * have no dedicated `kachel` container — `Tile` falls back to `link` as
+ * the visibility anchor for those).
  */
 export class StartPage {
   constructor(private readonly page: Page) {}
@@ -197,6 +204,33 @@ export class StartPage {
       this.page,
       STARTPAGE_PAGE.kacheln.weitereInteressanteBereiche.rundUmDenBerufsalltagSchmalTile
     );
+  }
+
+  get beruflicheIdeenUndImpulseSchmalTile(): Tile {
+    return new Tile(
+      this.page,
+      STARTPAGE_PAGE.kacheln.weitereInteressanteBereiche.beruflicheIdeenUndImpulseSchmalTile
+    );
+  }
+
+  get andereHilfreicheAnwendungenUeberschrift(): Locator {
+    return this.page.locator(STARTPAGE_PAGE.kacheln.andereHilfreicheAnwendungen.sektionUeberschrift);
+  }
+
+  get serviceLink01Tile(): Tile {
+    return new Tile(this.page, STARTPAGE_PAGE.kacheln.andereHilfreicheAnwendungen.serviceLink_01Tile);
+  }
+
+  get serviceLink02Tile(): Tile {
+    return new Tile(this.page, STARTPAGE_PAGE.kacheln.andereHilfreicheAnwendungen.serviceLink_02Tile);
+  }
+
+  get serviceLink03Tile(): Tile {
+    return new Tile(this.page, STARTPAGE_PAGE.kacheln.andereHilfreicheAnwendungen.serviceLink_03Tile);
+  }
+
+  get serviceLink04Tile(): Tile {
+    return new Tile(this.page, STARTPAGE_PAGE.kacheln.andereHilfreicheAnwendungen.serviceLink_04Tile);
   }
 
   get unsereServicesUeberschrift(): Locator {
