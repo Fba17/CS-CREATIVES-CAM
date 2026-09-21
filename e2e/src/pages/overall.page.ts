@@ -97,14 +97,24 @@ export async function feedbackKomponentUeberpruefen(page: Page) {
 export class OverallPage {
   constructor(private readonly page: Page) {}
 
-  /** The page-shell heading + subheading shown at the top of every page. */
-  async expectHeader(erwartet: { titel: string; zusatz: string }): Promise<void> {
-    await expect
-      .soft(this.page.locator(OVERALL_PAGE.kontextInfoHeader.seitenrahmen_ueberschrift))
-      .toHaveText(erwartet.titel);
-    await expect
-      .soft(this.page.locator(OVERALL_PAGE.kontextInfoHeader.seitenrahmen_ueberschrift_zusatz))
-      .toHaveText(erwartet.zusatz);
+  /**
+   * The page-shell heading + subheading shown at the top of every page.
+   *
+   * `soft` defaults to `true` (matching most existing usage) but some
+   * specs assert this with a hard `expect` instead — pass `{ soft: false }`
+   * to preserve that fail-fast behavior rather than silently switching it.
+   */
+  async expectHeader(
+    erwartet: { titel: string; zusatz: string },
+    options: { soft?: boolean } = {}
+  ): Promise<void> {
+    const check = (options.soft ?? true) ? expect.soft : expect;
+    await check(this.page.locator(OVERALL_PAGE.kontextInfoHeader.seitenrahmen_ueberschrift)).toHaveText(
+      erwartet.titel
+    );
+    await check(
+      this.page.locator(OVERALL_PAGE.kontextInfoHeader.seitenrahmen_ueberschrift_zusatz)
+    ).toHaveText(erwartet.zusatz);
   }
 
   /**

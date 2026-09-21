@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 import { CookieBanner } from './components/cookie-banner.component';
 import { NewsTile } from './components/news-tile.component';
 import { Tile } from './components/tile.component';
@@ -158,6 +158,17 @@ export class StartPage {
 
   get cookieBanner(): CookieBanner {
     return new CookieBanner(this.page, STARTPAGE_PAGE.cookiesDisclaimer.button.alleUebernehmen);
+  }
+
+  /**
+   * Asserts the browser is on the start page. `soft` defaults to `true`
+   * (matching the "@smoke 01" content test) — pass `{ soft: false }` to
+   * preserve the hard, fail-fast behavior used by the other start page
+   * tests instead of silently switching it.
+   */
+  async expectUrl(options: { soft?: boolean } = {}): Promise<void> {
+    const check = (options.soft ?? true) ? expect.soft : expect;
+    await check(this.page).toHaveURL(STARTPAGE_PAGE.url);
   }
 
   get ausbildungsberufeTile(): Tile {

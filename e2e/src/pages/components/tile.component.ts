@@ -83,8 +83,20 @@ export class Tile {
     await expect.soft(this.kachel).toBeVisible();
   }
 
+  /**
+   * Asserts the tile's own container (or `link`, see `kachel` above) is
+   * hidden, plus its `titel`/`text` if this tile configures them —
+   * matching `digitaleNutzerreisenTile`, whose "hidden" check in the
+   * original spec covers all three, not just the container.
+   */
   async expectHidden(): Promise<void> {
     await expect.soft(this.kachel).toBeHidden();
+    if (this.locators.titel) {
+      await expect.soft(this.page.locator(this.locators.titel)).toBeHidden();
+    }
+    if (this.locators.text) {
+      await expect.soft(this.page.locator(this.locators.text)).toBeHidden();
+    }
   }
 
   /**
