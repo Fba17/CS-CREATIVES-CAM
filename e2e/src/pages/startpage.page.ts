@@ -1,5 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { CookieBanner } from './components/cookie-banner.component';
+import { NewsTile } from './components/news-tile.component';
 import { Tile } from './components/tile.component';
 
 /**
@@ -138,12 +139,12 @@ export const STARTPAGE_PAGE = {
  *
  * Exposes `Tile` components for every kachel currently exercised by
  * `startseite.spec.ts` (the "@smoke 01" content test and the "@smoke 02"
- * order test, via `Tile.expectOrderLabel`). The tiles under
- * `unsereServices` and `andereHilfreicheAnwendungen` are intentionally
- * not wrapped yet — their shapes (multiple links, a "logo" instead of
- * "bild", link-only tiles with no separate title) don't fit the generic
- * `Tile` component, and `beruflicheIdeenUndImpulseSchmalTile` can't be
- * wrapped at all yet since its locators weren't captured (see TODO above).
+ * order test, via `Tile.expectOrderLabel`), plus `unsereServices`
+ * (`berufsberatungTile`/`azubiWeltTile` fit the generic `Tile`;
+ * `newsTile` gets the dedicated `NewsTile` component for its list of
+ * numbered links). `andereHilfreicheAnwendungen` and
+ * `beruflicheIdeenUndImpulseSchmalTile` can't be wrapped yet since their
+ * locators weren't captured (see TODO above).
  */
 export class StartPage {
   constructor(private readonly page: Page) {}
@@ -196,5 +197,21 @@ export class StartPage {
       this.page,
       STARTPAGE_PAGE.kacheln.weitereInteressanteBereiche.rundUmDenBerufsalltagSchmalTile
     );
+  }
+
+  get unsereServicesUeberschrift(): Locator {
+    return this.page.locator(STARTPAGE_PAGE.kacheln.unsereServices.sektionUeberschrift);
+  }
+
+  get berufsberatungTile(): Tile {
+    return new Tile(this.page, STARTPAGE_PAGE.kacheln.unsereServices.berufsberatungTile);
+  }
+
+  get azubiWeltTile(): Tile {
+    return new Tile(this.page, STARTPAGE_PAGE.kacheln.unsereServices.azubiWeltTile);
+  }
+
+  get newsTile(): NewsTile {
+    return new NewsTile(this.page, STARTPAGE_PAGE.kacheln.unsereServices.newsTile);
   }
 }

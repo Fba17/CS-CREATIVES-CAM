@@ -17,6 +17,8 @@ export type TileLocators = {
   bild?: string;
   /** Absolute-position locator used only by order/"Reihenfolge" checks. */
   titel_fuerReihenfolge?: string;
+  /** A logo image checked only via a `title` attribute (e.g. azubiWeltTile). */
+  logo?: string;
 };
 
 /**
@@ -28,11 +30,24 @@ export type ImageExpectation =
   | { kind: 'background'; pattern: RegExp }
   | { kind: 'src'; pattern: RegExp };
 
+/**
+ * A tile's `link` is checked on up to 3 independent facets across the
+ * existing specs: its visible text, its `href`, and sometimes a `title`
+ * attribute (used for the "opens in a new tab" hint). All optional so
+ * callers only assert what they care about.
+ */
+export type LinkExpectation = {
+  text?: string;
+  hrefPattern?: RegExp;
+  title?: string;
+};
+
 export type TileContentExpectation = {
   titel?: string;
   text?: string;
-  hrefPattern?: RegExp;
+  link?: LinkExpectation;
   image?: ImageExpectation;
+  logoTitle?: string;
 };
 
 /**
@@ -84,13 +99,20 @@ export class Tile {
       await expect.soft(this.page.locator(this.locators.text)).toHaveText(content.text);
     }
 
-    if (content.hrefPattern) {
+    if (content.link) {
       if (!this.locators.link) {
         throw new Error('Tile has no "link" locator configured');
       }
-      await expect
-        .soft(this.page.locator(this.locators.link))
-        .toHaveAttribute('href', content.hrefPattern);
+      const link = this.page.locator(this.locators.link);
+      if (content.link.text !== undefined) {
+        await expect.soft(link).toHaveText(content.link.text);
+      }
+      if (content.link.hrefPattern) {
+        await expect.soft(link).toHaveAttribute('href', content.link.hrefPattern);
+      }
+      if (content.link.title !== undefined) {
+        await expect.soft(link).toHaveAttribute('title', content.link.title);
+      }
     }
 
     if (content.image) {
@@ -100,6 +122,13 @@ export class Tile {
       const image = this.page.locator(this.locators.bild);
       const attribute = content.image.kind === 'background' ? 'style' : 'src';
       await expect.soft(image).toHaveAttribute(attribute, content.image.pattern);
+    }
+
+    if (content.logoTitle !== undefined) {
+      if (!this.locators.logo) {
+        throw new Error('Tile has no "logo" locator configured');
+      }
+      await expect.soft(this.page.locator(this.locators.logo)).toHaveAttribute('title', content.logoTitle);
     }
   }
 
