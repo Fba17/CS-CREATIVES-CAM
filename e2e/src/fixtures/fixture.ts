@@ -111,3 +111,5 @@ export const test = base.extend<JiraFixture>({
     await apiContext.dispose();
   },
 });
+
+export const expect = base.expect;
