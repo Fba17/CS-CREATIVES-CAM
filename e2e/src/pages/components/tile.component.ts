@@ -15,6 +15,8 @@ export type TileLocators = {
   text?: string;
   link?: string;
   bild?: string;
+  /** Absolute-position locator used only by order/"Reihenfolge" checks. */
+  titel_fuerReihenfolge?: string;
 };
 
 /**
@@ -99,5 +101,21 @@ export class Tile {
       const attribute = content.image.kind === 'background' ? 'style' : 'src';
       await expect.soft(image).toHaveAttribute(attribute, content.image.pattern);
     }
+  }
+
+  /**
+   * Verifies this tile's rendering position via `titel_fuerReihenfolge`
+   * (a locator scoped to an absolute index among all tiles of its group,
+   * as opposed to `titel` which is scoped to this tile's own container).
+   *
+   * Uses a hard `expect` (not `.soft`), matching the existing
+   * "Reihenfolge" (order) test, which fails fast rather than collecting
+   * every mismatch — unlike the content checks above.
+   */
+  async expectOrderLabel(text: string): Promise<void> {
+    if (!this.locators.titel_fuerReihenfolge) {
+      throw new Error('Tile has no "titel_fuerReihenfolge" locator configured');
+    }
+    await expect(this.page.locator(this.locators.titel_fuerReihenfolge)).toHaveText(text);
   }
 }

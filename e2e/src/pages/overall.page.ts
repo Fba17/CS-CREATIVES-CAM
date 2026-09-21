@@ -108,6 +108,15 @@ export class OverallPage {
   }
 
   /**
+   * Asserts the full breadcrumb nav's text as a single string — used on
+   * pages with a single, non-linked crumb (e.g. `'Startseite (aktuelle
+   * Seite)'`). For multi-crumb pages, use `breadcrumbAt()` instead.
+   */
+  async expectBreadcrumbLabel(text: string): Promise<void> {
+    await expect(this.page.locator(OVERALL_PAGE.breadcrumbs.breadcrumb)).toHaveText(text);
+  }
+
+  /**
    * Breadcrumb item by 1-based position. `keinLink: true` targets the
    * text-only variant (typically the last, current-page crumb).
    *

@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { CookieBanner } from './components/cookie-banner.component';
 import { Tile } from './components/tile.component';
 
 /**
@@ -90,12 +91,19 @@ export const STARTPAGE_PAGE = {
         text: 'xpath=//*[@id="rund_um_den_Berufsalltag"]//p',
         bild: 'xpath=//*[@id="rund_um_den_Berufsalltag"]//IMG[@class="ba-image"]',
       },
-      // TODO(transcription-gap): the original file has more content here
-      // before `unsereServices` — a screenshot edge showed a
-      // `link: 'xpath=(//ba-berufetv-servicelinks//article)[4]/a'` entry
-      // belonging to an object not otherwise captured. Paste the missing
-      // section here once available.
+      // TODO(transcription-gap): `startseite.spec.ts` confirms a further
+      // tile here, `beruflicheIdeenUndImpulseSchmalTile` (kachel, titel,
+      // titel_fuerReihenfolge, text, bild — same shape as its siblings
+      // above), but its raw locator strings weren't captured. Add it here
+      // once available; DO NOT guess the xpath/id strings.
     },
+    // TODO(transcription-gap): a section (name unconfirmed, e.g.
+    // `andereHilfreicheAnwendungen`) sits here with a `sektionUeberschrift`
+    // and at least 4 `serviceLink_0{1..4}Tile` entries (each only `link` +
+    // `text`, no `kachel`/`titel`/`bild`) — confirmed by
+    // `startseite.spec.ts` usage of `serviceLink_01Tile` and by a
+    // `link: 'xpath=(//ba-berufetv-servicelinks//article)[4]/a'` fragment
+    // seen at a screenshot edge. Add it here once available.
     unsereServices: {
       sektionUeberschrift: '#footer-section-heading',
       berufsberatungTile: {
@@ -129,14 +137,20 @@ export const STARTPAGE_PAGE = {
  * Page object for the berufe.TV start page (`/berufetv/start`).
  *
  * Exposes `Tile` components for every kachel currently exercised by
- * `startseite.spec.ts` (the "@smoke 01" content test). The tiles under
- * `unsereServices` are intentionally not wrapped yet — their shape
- * (multiple links, a "logo" instead of "bild") doesn't fit the generic
- * `Tile` component and no spec covering them has been reviewed yet, so
- * building a variant for them now would be guessing at requirements.
+ * `startseite.spec.ts` (the "@smoke 01" content test and the "@smoke 02"
+ * order test, via `Tile.expectOrderLabel`). The tiles under
+ * `unsereServices` and `andereHilfreicheAnwendungen` are intentionally
+ * not wrapped yet — their shapes (multiple links, a "logo" instead of
+ * "bild", link-only tiles with no separate title) don't fit the generic
+ * `Tile` component, and `beruflicheIdeenUndImpulseSchmalTile` can't be
+ * wrapped at all yet since its locators weren't captured (see TODO above).
  */
 export class StartPage {
   constructor(private readonly page: Page) {}
+
+  get cookieBanner(): CookieBanner {
+    return new CookieBanner(this.page, STARTPAGE_PAGE.cookiesDisclaimer.button.alleUebernehmen);
+  }
 
   get ausbildungsberufeTile(): Tile {
     return new Tile(this.page, STARTPAGE_PAGE.kacheln.filmkategorien.ausbildungsberufeTile);

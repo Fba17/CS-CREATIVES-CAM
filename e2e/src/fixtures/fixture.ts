@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { APIRequestContext, test as base, TestInfo } from '@playwright/test';
 import { CURRENT_BACKEND } from 'environment';
-import { STARTPAGE_PAGE } from 'src/pages/startpage.page';
+import { StartPage } from 'src/pages/startpage.page';
 
 const JIRA_BASE = 'https://jira.webapp.sdst.sbaintern.de/browse/';
 const linkJiraItems = async (testInfo: TestInfo, stories: string[]) => {
@@ -44,17 +44,8 @@ export const test = base.extend<JiraFixture>({
     // Open the start page
     await page.goto('', { waitUntil: 'domcontentloaded', timeout: 60_000 });
 
-    const allowAllCookiesBtn = page.getByTestId(
-      STARTPAGE_PAGE.cookiesDisclaimer.button.alleUebernehmen
-    );
-    // Wait for cookie disclaimer
-    await expect(allowAllCookiesBtn).toBeVisible({ timeout: 10000 });
-
-    // Remove cookie disclaimer
-    if (await allowAllCookiesBtn.isVisible()) {
-      await allowAllCookiesBtn.click();
-      await allowAllCookiesBtn.waitFor({ state: 'hidden' });
-    }
+    // Wait for and remove the cookie disclaimer
+    await new StartPage(page).cookieBanner.acceptAll();
 
     await use(page);
   },
