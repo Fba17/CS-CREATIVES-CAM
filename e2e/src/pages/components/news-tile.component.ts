@@ -1,4 +1,4 @@
-import { Page, expect } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 
 /**
  * Locators for the "Unsere Services" news tile — structurally different
@@ -32,6 +32,39 @@ export class NewsTile {
     private readonly page: Page,
     private readonly locators: NewsTileLocators
   ) {}
+
+  get kachel(): Locator {
+    return this.page.locator(this.locators.kachel);
+  }
+
+  get link01(): Locator {
+    return this.page.locator(this.locators.link_01);
+  }
+
+  get link02(): Locator {
+    return this.page.locator(this.locators.link_02);
+  }
+
+  /**
+   * Asserts the tile's container is visible, with a hard `expect` — used
+   * by `newsseite.spec.ts` when navigating to/from the news page, as
+   * opposed to the soft check already inside `expectContent()`.
+   */
+  async expectVisible(): Promise<void> {
+    await expect(this.kachel).toBeVisible();
+  }
+
+  async openAlleNews(): Promise<void> {
+    await this.page.locator(this.locators.link_AlleNews).click();
+  }
+
+  async openLink01(): Promise<void> {
+    await this.link01.click();
+  }
+
+  async openLink02(): Promise<void> {
+    await this.link02.click();
+  }
 
   private async expectNewsLink(selector: string, expectation: NewsLinkExpectation): Promise<void> {
     const link = this.page.locator(selector);
