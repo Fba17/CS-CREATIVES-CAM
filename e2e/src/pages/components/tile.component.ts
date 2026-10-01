@@ -24,6 +24,8 @@ export type TileLocators = {
   titel_fuerReihenfolge?: string;
   /** A logo image checked only via a `title` attribute (e.g. azubiWeltTile). */
   logo?: string;
+  /** A count/"show more" button (e.g. the Berufsfeld tiles' `anzahlButton-<id>`). */
+  anzahl?: string;
 };
 
 /**
@@ -53,6 +55,7 @@ export type TileContentExpectation = {
   link?: LinkExpectation;
   image?: ImageExpectation;
   logoTitle?: string;
+  anzahl?: string;
 };
 
 /**
@@ -151,6 +154,13 @@ export class Tile {
         throw new Error('Tile has no "logo" locator configured');
       }
       await expect.soft(this.page.locator(this.locators.logo)).toHaveAttribute('title', content.logoTitle);
+    }
+
+    if (content.anzahl !== undefined) {
+      if (!this.locators.anzahl) {
+        throw new Error('Tile has no "anzahl" locator configured');
+      }
+      await expect.soft(this.page.locator(this.locators.anzahl)).toHaveText(content.anzahl);
     }
   }
 
