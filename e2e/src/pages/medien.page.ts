@@ -1,4 +1,5 @@
-import { Page, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
+import { BerufsfeldPage } from './components/berufsfeld-page.base';
 import { Tile } from './components/tile.component';
 
 /**
@@ -66,30 +67,28 @@ export const MEDIEN_PAGE = {
  * (kachel/titel/text/link/bild/anzahl), so they all go through the
  * generic `Tile` with no exceptions needed.
  */
-export class MedienPage {
-  constructor(private readonly page: Page) {}
-
-  async expectUrl(): Promise<void> {
-    await expect(this.page).toHaveURL(MEDIEN_PAGE.url);
+export class MedienPage extends BerufsfeldPage {
+  constructor(page: Page) {
+    super(page, MEDIEN_PAGE.url);
   }
 
   get druckUndMedienTile(): Tile {
-    return new Tile(this.page, MEDIEN_PAGE.kacheln.berufe_rund_um_druck_und_medien);
+    return this.tile(MEDIEN_PAGE.kacheln.berufe_rund_um_druck_und_medien);
   }
 
   get fotoTile(): Tile {
-    return new Tile(this.page, MEDIEN_PAGE.kacheln.berufe_rund_ums_foto);
+    return this.tile(MEDIEN_PAGE.kacheln.berufe_rund_ums_foto);
   }
 
   get filmFunkUndFernsehenTile(): Tile {
-    return new Tile(this.page, MEDIEN_PAGE.kacheln.berufe_rund_um_film_funk_und_fernsehen);
+    return this.tile(MEDIEN_PAGE.kacheln.berufe_rund_um_film_funk_und_fernsehen);
   }
 
   get archivBibliothekUndDokumentationTile(): Tile {
-    return new Tile(this.page, MEDIEN_PAGE.kacheln.berufe_rund_um_archiv_bibliothek_und_dokumentation);
+    return this.tile(MEDIEN_PAGE.kacheln.berufe_rund_um_archiv_bibliothek_und_dokumentation);
   }
 
   get journalismusRedaktionTile(): Tile {
-    return new Tile(this.page, MEDIEN_PAGE.kacheln.berufe_rund_um_journalismus_redaktion);
+    return this.tile(MEDIEN_PAGE.kacheln.berufe_rund_um_journalismus_redaktion);
   }
 }
