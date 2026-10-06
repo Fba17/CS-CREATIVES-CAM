@@ -29,13 +29,16 @@ export type TileLocators = {
 };
 
 /**
- * How to validate a tile's image. berufe.TV mixes two implementations:
- * a `<div style="background-image:...">` ("large" filmkategorien tiles)
- * and a plain `<img src="...">` ("schmal" tiles).
+ * How to validate a tile's image. berufe.TV mixes a few implementations:
+ * a `<div style="background-image:...">` ("large" filmkategorien tiles),
+ * a plain `<img src="...">` ("schmal" tiles), and the Berufsfeld kacheln's
+ * background image built from a fixed URL prefix + filename (the shape
+ * `ausbildungsberufe.page.ts`'s own `kachelPruefung()` already checks).
  */
 export type ImageExpectation =
   | { kind: 'background'; pattern: RegExp }
-  | { kind: 'src'; pattern: RegExp };
+  | { kind: 'src'; pattern: RegExp }
+  | { kind: 'background-url'; filename: string; noAlt?: boolean };
 
 /**
  * A tile's `link` is checked on up to 3 independent facets across the
@@ -145,8 +148,20 @@ export class Tile {
         throw new Error('Tile has no "bild" locator configured');
       }
       const image = this.page.locator(this.locators.bild);
-      const attribute = content.image.kind === 'background' ? 'style' : 'src';
-      await expect.soft(image).toHaveAttribute(attribute, content.image.pattern);
+      if (content.image.kind === 'background-url') {
+        if (content.image.noAlt) {
+          await expect.soft(image).not.toHaveAttribute('alt');
+        }
+        await expect
+          .soft(image)
+          .toHaveAttribute(
+            'style',
+            `background-image: url("assets/images/kachel/dkzid/maxcompressed/${content.image.filename}");`
+          );
+      } else {
+        const attribute = content.image.kind === 'background' ? 'style' : 'src';
+        await expect.soft(image).toHaveAttribute(attribute, content.image.pattern);
+      }
     }
 
     if (content.logoTitle !== undefined) {
