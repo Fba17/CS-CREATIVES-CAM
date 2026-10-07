@@ -58,7 +58,8 @@ export const OVERALL_PAGE = {
   // TODO(transcription-gap): `kachel1` through `kachel19` were not
   // captured. They follow the exact same shape as kachel20-26 below
   // (only a `titel` field, `xpath=//BA-BUB-KACHEL[n]//H2`), so prefer
-  // `OverallPage.kachel(n)` (below) over reproducing them here by hand.
+  // `OverallPage.kachelTitel(n)`/`kachelContainer(n)` (below) over
+  // reproducing them here by hand.
   kachel20: { titel: 'xpath=//BA-BUB-KACHEL[20]//H2' },
   kachel21: { titel: 'xpath=//BA-BUB-KACHEL[21]//H2' },
   kachel22: { titel: 'xpath=//BA-BUB-KACHEL[22]//H2' },
@@ -143,9 +144,18 @@ export class OverallPage {
    * One of the generic "BUB" kacheln (1-26) shown site-wide, identified
    * purely by position. Computed rather than looked up in `OVERALL_PAGE`
    * so we don't need to hardcode all 26 entries by hand.
+   *
+   * `kachelContainer`'s xpath (no `//H2` suffix) is inferred by pattern
+   * from `kachelTitel` — confirmed real usage only showed `kachel17.kachel`
+   * (checked hidden) and `kachel01..17.titel`, not the raw selector string
+   * for the container. Verify against the source before relying on it.
    */
-  kachel(index: number): Locator {
+  kachelTitel(index: number): Locator {
     return this.page.locator(`xpath=//BA-BUB-KACHEL[${index}]//H2`);
+  }
+
+  kachelContainer(index: number): Locator {
+    return this.page.locator(`xpath=//BA-BUB-KACHEL[${index}]`);
   }
 
   async expectDefaultFeedbackWidget(): Promise<void> {

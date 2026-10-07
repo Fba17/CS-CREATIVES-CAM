@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
-import { BerufsfeldPage } from './components/berufsfeld-page.base';
-import { Tile } from './components/tile.component';
+import { BerufsfeldPage } from '../components/berufsfeld-page.base';
+import { Tile } from '../components/tile.component';
 
 /** Transcribed in full from screenshots of the real `it_computer.page.ts` — no gaps. */
 export const ITCOMPUTER_PAGE = {
