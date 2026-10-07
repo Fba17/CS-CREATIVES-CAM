@@ -12,17 +12,15 @@ import { AUSBILDUNGSBERUFE_PAGE } from '../../../pages/ausbildungsberufe.page';
  *
  * FIDELITY NOTE: several `text` values were cut off at the source
  * screenshot's right edge (long German sentences). Each truncated one is
- * marked `// TODO: truncated after "...<last visible words>"` — verify
- * against the real file before relying on them. Three entries
- * (gesellschaft_geisteswissenschaften, kunst_kultur_gestaltung, medien)
- * weren't captured at all yet and are omitted rather than guessed.
+ * marked `// TODO: truncated after "...<last visible words>"` — still
+ * needs completing against the real file.
  */
 export type KachelnTestData = Record<
   keyof typeof AUSBILDUNGSBERUFE_PAGE.kacheln,
   { titel: string; text: string; bild: string; linkHrefPattern: RegExp }
 >;
 
-export const ausbildungsUeberblickKachelnTestData: Partial<KachelnTestData> = {
+export const ausbildungsUeberblickKachelnTestData: KachelnTestData = {
   landwirtschaft: {
     titel: 'Landwirtschaft, Natur, Umwelt',
     text: 'Rund um Landwirtschaft, Natur, Umwelt arbeitet man vor allem mit Tieren und Pflanzen oder trägt Verantwortung für deren Schutz. Es geht beispielsweise darum, Tiere zu züchten und zu pflegen oder Pfl', // TODO: truncated after "...Pfl"
@@ -101,7 +99,22 @@ export const ausbildungsUeberblickKachelnTestData: Partial<KachelnTestData> = {
     bild: 'dkz_9159_04.jpg',
     linkHrefPattern: /^[\s\S]*\/ausbildungsberufe\/soziales-paedagogik\//,
   },
-  // TODO: gesellschaft_geisteswissenschaften, kunst_kultur_gestaltung and
-  // medien weren't captured yet (screenshots stopped mid-entry) — add them
-  // once seen, rather than guessing their text/bild/href.
+  gesellschaft_geisteswissenschaften: {
+    titel: 'Gesellschafts-, Geisteswissenschaften',
+    text: 'Von archäologischen Ausgrabungen bis hin zur Computerlinguistik: Gesellschafts- und Geisteswissenschaften befassen sich aus unterschiedlichen Blickwinkeln mit dem gesellschaftlichen Leben und histor', // TODO: truncated after "...histor"
+    bild: 'sprachwiss_10.jpg',
+    linkHrefPattern: /^[\s\S]*\/ausbildungsberufe\/gesellschafts-geisteswissenschaften\//,
+  },
+  kunst_kultur_gestaltung: {
+    titel: 'Kunst, Kultur, Gestaltung',
+    text: 'Beim Thema Kunst, Kultur, Gestaltung dreht sich alles um Kreativität. Materialien wie Glas, Holz oder Metall werden zu Kunstgegenständen und Schmuck verarbeitet oder Objekte aufwendig restauriert. U', // TODO: truncated after "...restauriert. U"
+    bild: 'dkz_857_26.jpg',
+    linkHrefPattern: /^[\s\S]*\/ausbildungsberufe\/kunst-kultur-gestaltung\//,
+  },
+  medien: {
+    titel: 'Medien',
+    text: 'Von archivierten historischen Dokumenten bis hin zu digitalen Formaten im Internet – Medien sind vielseitig. Gedruckte Medien wie Zeitungen, Prospekte oder Bücher müssen gestaltet, hergestellt und v', // TODO: truncated after "...hergestellt und v"
+    bild: 'dkz_8293_14.jpg',
+    linkHrefPattern: /^[\s\S]*\/ausbildungsberufe\/medien\//,
+  },
 };
