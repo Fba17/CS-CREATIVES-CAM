@@ -1,5 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { expect } from '../fixtures/fixture';
+import { Ueberblicksfilm } from './components/ueberblicksfilm.component';
 
 /**
  * NOTE (staged transcription): this locator map was transcribed from
@@ -8,9 +9,15 @@ import { expect } from '../fixtures/fixture';
  * (only `ikon_voll` was seen; there are almost certainly more fields,
  * e.g. an "ikon_leer"/empty-star counterpart) plus `kachel1` through
  * `kachel19` (kachel20-26 were captured and follow a strictly
- * mechanical `xpath=//BA-BUB-KACHEL[n]//H2` pattern — see `kachel()`
+ * mechanical `xpath=//BA-BUB-KACHEL[n]//H2` pattern — see `kachelTitel()`
  * below, which replaces the need to hardcode any of them).
  * Do not treat this file as 100% ground truth until that gap is filled in.
+ *
+ * `ueberblicksfilm` is a SKELETON: `ausbildungsberufeUeberblick.spec.ts`
+ * confirmed these 7 field names are real (kachel/player/thumbnail/
+ * videoTag/videoDauer/ueberschrift/beschreibung) but not one real
+ * selector string. Every value below is a placeholder — replace with the
+ * real selectors before relying on `OverallPage.ueberblicksfilm`.
  */
 export const OVERALL_PAGE = {
   breadcrumbs: {
@@ -34,6 +41,16 @@ export const OVERALL_PAGE = {
   kontextInfoHeader: {
     seitenrahmen_ueberschrift: '#ueberschrift',
     seitenrahmen_ueberschrift_zusatz: '#kontextinfo-header-subheadline',
+  },
+  // SKELETON — see file-level note above. Replace every value here.
+  ueberblicksfilm: {
+    kachel: 'TODO:ueberblicksfilm.kachel',
+    player: 'TODO:ueberblicksfilm.player',
+    thumbnail: 'TODO:ueberblicksfilm.thumbnail',
+    videoTag: 'TODO:ueberblicksfilm.videoTag',
+    videoDauer: 'TODO:ueberblicksfilm.videoDauer',
+    ueberschrift: 'TODO:ueberblicksfilm.ueberschrift',
+    beschreibung: 'TODO:ueberblicksfilm.beschreibung',
   },
   berufSuchfeld: {
     input: '#typeahead-sucheingabe-beruf-input',
@@ -160,5 +177,10 @@ export class OverallPage {
 
   async expectDefaultFeedbackWidget(): Promise<void> {
     await feedbackKomponentUeberpruefen(this.page);
+  }
+
+  /** The intro-video widget shown at the top of every Berufsfeld category page. */
+  get ueberblicksfilm(): Ueberblicksfilm {
+    return new Ueberblicksfilm(this.page, OVERALL_PAGE.ueberblicksfilm);
   }
 }
