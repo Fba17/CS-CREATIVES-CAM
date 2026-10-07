@@ -11,13 +11,14 @@ import { Tile } from '../components/tile.component';
  *    (kachel/titel/text/link/bild/anzahl) used by every other Berufsfeld
  *    category page (medien/gesundheit/elektro/it_computer) — NOT verified
  *    for this page specifically
- *  - `url` is inferred from the same slug pattern as the other category
- *    pages (`/ausbildungsberufe/<hyphenated-name>`) — NOT verified
+ *  - `url` slug "produktion-fertigung" is now CONFIRMED (every
+ *    `expectedLinkHref` in produktionFertigung.data.ts targets
+ *    `/ausbildungsberufe/produktion-fertigung/<sub-slug>/`)
  * Replace every `'TODO'` below with the real locators from your own
  * produktion_fertigung.page.ts before relying on this file.
  */
 export const PRODUKTIONFERTIGUNG_PAGE = {
-  url: /berufetv.*\/ausbildungsberufe\/produktion-fertigung$/, // TODO: verify
+  url: /berufetv.*\/ausbildungsberufe\/produktion-fertigung$/,
   kacheln: {
     berufe_mit_bergbau: {
       kachel: 'TODO',
@@ -230,5 +231,10 @@ export class ProduktionFertigungPage extends BerufsfeldPage {
 
   get qualitaetssicherungTile(): Tile {
     return this.tile(PRODUKTIONFERTIGUNG_PAGE.kacheln.berufe_mit_qualitaetssicherung);
+  }
+
+  /** Looks up a tile by its key in `PRODUKTIONFERTIGUNG_PAGE.kacheln` — for data-driven loops. */
+  tileByKey(key: keyof typeof PRODUKTIONFERTIGUNG_PAGE.kacheln): Tile {
+    return this.tile(PRODUKTIONFERTIGUNG_PAGE.kacheln[key]);
   }
 }
