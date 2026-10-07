@@ -237,4 +237,13 @@ export class AusbildungsberufePage extends BerufsfeldPage {
   get medienTile(): Tile {
     return this.tile(AUSBILDUNGSBERUFE_PAGE.kacheln.medien);
   }
+
+  /**
+   * Looks up a tile by its key in `AUSBILDUNGSBERUFE_PAGE.kacheln` instead
+   * of its named getter — for data-driven loops (e.g. over a `.data.ts`
+   * file keyed the same way) instead of one call per named getter.
+   */
+  tileByKey(key: keyof typeof AUSBILDUNGSBERUFE_PAGE.kacheln): Tile {
+    return this.tile(AUSBILDUNGSBERUFE_PAGE.kacheln[key]);
+  }
 }
