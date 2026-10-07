@@ -13,8 +13,9 @@ import { KachelnTestData } from './ausbildungsberufeUeberblick.data';
  *
  * FIDELITY NOTE: several `text` values were cut off at the source
  * screenshot's right edge — each marked with a TODO showing exactly
- * where. `berufe_mit_qualitaetssicherung.linkHrefPattern` is missing
- * entirely (confirmed by the user: that line wasn't captured).
+ * where (the user still needs to fill these in). Everything else,
+ * including `berufe_mit_qualitaetssicherung.linkHrefPattern` (seen in a
+ * follow-up screenshot), is confirmed complete.
  */
 export type ProduktionFertigungKachelnTestData = Record<
   | 'berufe_mit_bergbau'
@@ -140,9 +141,6 @@ export const produktionFertigungKachelnTestData: ProduktionFertigungKachelnTestD
     titel: 'Berufe in der Qualitätssicherung',
     text: 'Im Berufsfeld Berufe in der Qualitätssicherung geht es vor allem um die Prüfung von Rohstoffen und Produkten bzw. die Überwachung von Fertigungs- und Arbeitsprozessen hinsichtlich der Einhaltung von', // TODO: truncated after "...Einhaltung von"
     bild: 'dkz_6366_05.jpg',
-    // TODO: linkHrefPattern wasn't captured at all (confirmed missing line
-    // in the source screenshot) — fill in from
-    // produktionFertigung.data.ts's real last entry.
-    linkHrefPattern: /^[\s\S]*\/ausbildungsberufe\/produktion-fertigung\/berufe-in-der-qualitaetssicherung\//, // TODO: slug guessed by pattern, NOT confirmed
+    linkHrefPattern: /^[\s\S]*\/ausbildungsberufe\/produktion-fertigung\/berufe-in-der-qualitaetssicherung\//,
   },
 };
