@@ -86,6 +86,10 @@ une information réelle manquante (jamais inventée). État actuel :
 - Palette de marque (extraite du dégradé du logo, voir section 6).
 - Horaires : Lundi–Vendredi 08h30–20h00, Samedi 08h30–18h00 (section Contact + données structurées).
   Dimanche laissé en `[à confirmer]` — vous ne l'avez pas précisé, je n'ai pas supposé qu'il est fermé.
+- Domaine réel `www.cs-creatives.net` renseigné partout (canonical, Open Graph, sitemap, robots.txt).
+- Image de partage (`assets/images/og-image.jpg`, 1200×630) générée à partir du vrai logo et de
+  la palette de marque — à remplacer par un vrai visuel (ex. une réalisation en situation) dès
+  que vous en avez un.
 
 **⚠️ À vérifier avant mise en ligne**
 - **Numéro WhatsApp** : le numéro fourni (+237 93 89 56 84) a **un chiffre de moins** que le
@@ -112,8 +116,8 @@ une information réelle manquante (jamais inventée). État actuel :
     <img src="assets/images/atelier-1.jpg" alt="…" width="800" height="600" loading="lazy">
   </picture>
   ```
-- **URL du site** : remplacer `https://www.cs-creatives.cm/` (balises canonical, Open Graph,
-  sitemap.xml, robots.txt) par le nom de domaine réel une fois choisi.
+- [x] **URL du site** : `https://www.cs-creatives.net/` (canonical, Open Graph, sitemap.xml,
+  robots.txt). Si le domaine final change, remplacer cette valeur partout.
 
 ## 6. Charte graphique appliquée
 
