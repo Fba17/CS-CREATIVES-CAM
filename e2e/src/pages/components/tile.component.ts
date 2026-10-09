@@ -89,6 +89,14 @@ export class Tile {
     await expect.soft(this.kachel).toBeVisible();
   }
 
+  /** Clicks the tile's `link` — e.g. to navigate into a category page. */
+  async openLink(): Promise<void> {
+    if (!this.locators.link) {
+      throw new Error('Tile has no "link" locator configured');
+    }
+    await this.page.locator(this.locators.link).click();
+  }
+
   /**
    * Asserts the tile's own container (or `link`, see `kachel` above) is
    * hidden, plus its `titel`/`text` if this tile configures them —

@@ -116,6 +116,15 @@ export class OverallPage {
   constructor(private readonly page: Page) {}
 
   /**
+   * `OVERALL_PAGE.titel` (`#content-header`) — a different, simpler page
+   * heading than `kontextInfoHeader`, used on Berufsfeld category pages
+   * (e.g. "Ausbildungsberufe Landwirtschaft, Natur, Umwelt").
+   */
+  async expectPageTitel(text: string): Promise<void> {
+    await expect.soft(this.page.locator(OVERALL_PAGE.titel)).toHaveText(text);
+  }
+
+  /**
    * The page-shell heading + subheading shown at the top of every page.
    *
    * `soft` defaults to `true` (matching most existing usage) but some
