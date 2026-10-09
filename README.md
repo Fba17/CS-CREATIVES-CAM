@@ -56,6 +56,24 @@ autre modification n'est nécessaire, la mise en page s'adapte automatiquement.
 Coller ce bloc avant la balise `<div class="relance">` de la section Réalisations.
 La galerie s'organise automatiquement en 1 colonne (mobile) à 3 colonnes (desktop).
 
+## 4bis. Ajouter un client à la bande « Ils nous font confiance »
+
+Juste après le hero, `index.html` affiche une bande de réassurance (BEAC, CONAC…).
+Chaque client est un `<li class="bande-confiance__item">` :
+
+```html
+<!-- Sans logo (texte seul) -->
+<li class="bande-confiance__item"><span class="bande-confiance__nom">NOM DU CLIENT</span></li>
+
+<!-- Avec un logo réel -->
+<li class="bande-confiance__item">
+  <img src="assets/images/clients/nom-du-client.png" alt="Nom du client" width="140" height="32" loading="lazy">
+</li>
+```
+
+Les deux versions ont déjà le même traitement visuel (grisé → couleur au survol) : passer
+du texte à l'image ne demande aucune retouche CSS.
+
 ## 5. Contenus encore à fournir
 
 Recherchez `a-completer` ou `[À COMPLÉTER]` dans `index.html` : chaque occurrence signale
@@ -66,15 +84,19 @@ une information réelle manquante (jamais inventée). État actuel :
 - Téléphone : +237 693 895 684 — email : cscreativesc@gmail.com — adresse : Chapelle Mvog-Ada, Yaoundé.
 - Mentions légales : RCCM CM-NSI-02-2025-B12-00229 — NIU M032517638542R.
 - Palette de marque (extraite du dégradé du logo, voir section 6).
+- Horaires : Lundi–Vendredi 08h30–20h00, Samedi 08h30–18h00 (section Contact + données structurées).
+  Dimanche laissé en `[à confirmer]` — vous ne l'avez pas précisé, je n'ai pas supposé qu'il est fermé.
 
 **⚠️ À vérifier avant mise en ligne**
 - **Numéro WhatsApp** : le numéro fourni (+237 93 89 56 84) a **un chiffre de moins** que le
   téléphone (+237 693 895 684). Un `<!-- TODO -->` marque les deux endroits concernés
   (bouton flottant + section Contact) — à confirmer avant publication, sinon le lien WhatsApp
   n'aboutira pas à la bonne discussion.
+- **Bande « Ils nous font confiance »** (juste après le hero) : BEAC et CONAC sont en place en
+  texte (pas de logo officiel inventé — voir section 4bis pour en ajouter). Liste à compléter :
+  quels autres clients/institutions voulez-vous afficher, et avez-vous leurs logos ?
 
 **Encore manquant**
-- **Horaires** d'ouverture (section Contact + données structurées).
 - **Réseaux sociaux** : liens Facebook / Instagram / LinkedIn (pied de page).
 - **Services** : délais indicatifs pour chaque prestation (section Services).
 - **Atelier & équipement** : noms des machines et ce qu'elles permettent (section Locaux).
@@ -134,7 +156,7 @@ services, les réalisations et les photos d'atelier. C'est la classe CSS `.reper
 - [ ] Lecteur d'écran : vérifier que les images ont un texte alternatif pertinent (pas seulement les placeholders)
 
 **SEO**
-- [ ] Renseigner les horaires réels dans les données structurées `LocalBusiness` (adresse et téléphone déjà à jour)
+- [x] Adresse, téléphone et horaires renseignés dans les données structurées `LocalBusiness`
 - [ ] Vérifier l'aperçu de partage WhatsApp/Facebook (balises Open Graph) avec l'outil du réseau concerné
 - [ ] Soumettre le site à Google Search Console une fois le domaine réel en ligne
 

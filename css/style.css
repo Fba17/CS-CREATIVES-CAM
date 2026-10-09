@@ -214,6 +214,59 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 /* ============================================================
+   BANDE DE CONFIANCE — réassurance clients/institutions.
+   Volontairement sobre (pas de repère de calage ici) : une bande de
+   crédibilité se lit en un coup d'œil, elle ne doit pas rivaliser avec
+   le hero ou les cartes de service.
+   ============================================================ */
+.bande-confiance {
+  border-top: 1px solid var(--couleur-bordure);
+  border-bottom: 1px solid var(--couleur-bordure);
+  padding-block: 1.75rem;
+}
+.bande-confiance__label {
+  margin: 0 0 1.1rem;
+  text-align: center;
+  font-family: var(--police-titres);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--couleur-texte-attenue);
+}
+.bande-confiance__logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem 2.5rem;
+}
+.bande-confiance__item { display: flex; align-items: center; }
+.bande-confiance__nom {
+  font-family: var(--police-titres);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+  color: var(--couleur-texte-attenue);
+  opacity: 0.8;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+.bande-confiance__item:hover .bande-confiance__nom {
+  opacity: 1;
+  color: var(--couleur-primaire);
+}
+/* Dès qu'un vrai logo (image) remplace le texte : même traitement
+   "estompé en niveaux de gris -> couleur au survol". */
+.bande-confiance__item img {
+  height: 32px;
+  width: auto;
+  filter: grayscale(1);
+  opacity: 0.75;
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+.bande-confiance__item:hover img { filter: grayscale(0); opacity: 1; }
+
+/* ============================================================
    SECTIONS génériques
    ============================================================ */
 .section { padding-block: var(--espace-section); }
