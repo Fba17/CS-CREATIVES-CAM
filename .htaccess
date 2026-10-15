@@ -1,0 +1,12 @@
+# CS-Créatives Cameroun — règles Apache (hébergement mutualisé cPanel)
+#
+# URL propre : /terms doit servir terms.html, sans que l'utilisateur
+# voie l'extension ni une redirection dans la barre d'adresse.
+# Règle générique : si "/truc" n'existe pas tel quel mais que "truc.html"
+# existe, on sert ce fichier en interne (pas de redirection visible).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}\.html -f
+  RewriteRule ^([^.]+)$ $1.html [L]
+</IfModule>

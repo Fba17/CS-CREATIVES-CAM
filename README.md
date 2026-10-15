@@ -169,7 +169,24 @@ services, les réalisations et les photos d'atelier. C'est la classe CSS `.reper
 - [ ] Vérifier que le bouton WhatsApp flottant n'empêche jamais de lire un texte ou d'atteindre un bouton
 - [ ] Vérifier le clic direct sur les numéros de téléphone (`tel:`) et WhatsApp (`wa.me`) depuis un vrai mobile
 
-## 8. Formulaire de contact — service utilisé
+## 8. Page CGV (`/terms`)
+
+`terms.html` contient les conditions générales de vente, couvrant l'impression grand format,
+la confection/couture et les produits digitaux. Un `.htaccess` (règle `mod_rewrite`, standard
+sur l'hébergement cPanel/Apache) permet d'y accéder via l'URL propre `www.cs-creatives.net/terms`
+sans extension ni redirection visible.
+
+**⚠️ Avant publication définitive** : ce texte est un modèle solide et cohérent avec votre
+activité (notamment la clause centrale — pas d'annulation/remboursement une fois la production
+engagée), mais ce n'est pas un avis juridique. Faites-le valider par un conseil juridique local
+(notamment la conformité avec le droit camerounais de la consommation si vous servez des
+particuliers) avant de considérer ce document comme définitivement opposable.
+
+Pour le modifier : chaque article est un bloc `<article class="page-legale__article">` dans
+`terms.html`, numéroté et autonome — en ajouter, en retirer ou en réordonner ne demande aucune
+retouche de style.
+
+## 9. Formulaire de contact — service utilisé
 
 **Formspree** a été choisi (voir échange de validation) : pas de backend à héberger,
 gratuit jusqu'à 50 soumissions/mois, mise en place en quelques minutes sur
