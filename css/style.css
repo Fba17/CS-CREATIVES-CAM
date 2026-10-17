@@ -319,7 +319,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .fiche-technique__ligne dt { font-family: var(--police-titres); font-weight: 600; }
 .fiche-technique__ligne dd { margin: 0; color: var(--couleur-texte-attenue); }
 .locaux__photos { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
-.locaux__photos img:first-child { grid-column: 1 / -1; }
+.locaux__photos > :first-child { grid-column: 1 / -1; }
+.locaux__photos picture { display: block; }
 @media (min-width: 900px) {
   .locaux__grille { grid-template-columns: 1fr 1fr; }
   .fiche-technique__ligne { grid-template-columns: 1fr 1.3fr; align-items: baseline; }

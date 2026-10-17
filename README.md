@@ -79,7 +79,7 @@ du texte à l'image ne demande aucune retouche CSS.
 Recherchez `a-completer` ou `[À COMPLÉTER]` dans `index.html` : chaque occurrence signale
 une information réelle manquante (jamais inventée). État actuel :
 
-**Déjà intégré (v2)**
+**Déjà intégré (v3)**
 - Logo réel (`assets/logo/cs-creatives-logo.png` / `.webp`, fond transparent).
 - Téléphone : +237 693 895 684 — email : cscreativesc@gmail.com — adresse : Chapelle Mvog-Ada, Yaoundé.
 - Mentions légales : RCCM CM-NSI-02-2025-B12-00229 — NIU M032517638542R.
@@ -90,32 +90,38 @@ une information réelle manquante (jamais inventée). État actuel :
 - Image de partage (`assets/images/og-image.jpg`, 1200×630) générée à partir du vrai logo et de
   la palette de marque — à remplacer par un vrai visuel (ex. une réalisation en situation) dès
   que vous en avez un.
+- Page CGV (`/terms`, voir section 8).
+- **Photo hero** : vraie photo de l'atelier (accueil + imprimantes).
+- **Services** : les 7 prestations reflètent vos vraies catégories (vues sur vos panneaux en
+  boutique) — Affiches, Bâches & banderoles, Roll-up/X-banner/kakémonos, Drapeaux & oriflammes,
+  Flocage & tee-shirts, Autocollants & sacs, Graphisme & identité visuelle.
+- **Réalisations** : 6 vrais projets avec photos (MINFOPRA, BEAC, ESMATA, CERAC, Mairie de
+  Yaoundé 6, Goddess E-Reputation Agency) — remplacent les gabarits génériques.
+- **Atelier** : 1<sup>re</sup> photo (mur de panneaux + imprimantes) intégrée.
 
 **⚠️ À vérifier avant mise en ligne**
 - **Numéro WhatsApp** : le numéro fourni (+237 93 89 56 84) a **un chiffre de moins** que le
   téléphone (+237 693 895 684). Un `<!-- TODO -->` marque les deux endroits concernés
   (bouton flottant + section Contact) — à confirmer avant publication, sinon le lien WhatsApp
   n'aboutira pas à la bonne discussion.
-- **Bande « Ils nous font confiance »** (juste après le hero) : BEAC et CONAC sont en place en
-  texte (pas de logo officiel inventé — voir section 4bis pour en ajouter). Liste à compléter :
-  quels autres clients/institutions voulez-vous afficher, et avez-vous leurs logos ?
+- **Bande « Ils nous font confiance »** : BEAC est maintenant confirmée par photo (roll-up BEAC
+  réellement réalisé). CONAC reste en texte sans confirmation visuelle. Un 3<sup>e</sup>
+  emplacement `[Client à ajouter]` attend d'autres clients si vous en voulez.
+
+**Volontairement écartées**
+- Une photo montrant une bâche en cours d'impression avec le portrait d'une personnalité
+  politique : gardée hors du site pour éviter tout amalgame politique (décision du client).
+- Un rendu 3D de façade de boutique : ce n'est pas une photo réelle, donc pas utilisé comme
+  "photo de l'atelier" — à réintégrer en Réalisations si c'est un projet de conception à
+  montrer, en le présentant clairement comme un rendu.
 
 **Encore manquant**
 - **Réseaux sociaux** : liens Facebook / Instagram / LinkedIn (pied de page).
 - **Services** : délais indicatifs pour chaque prestation (section Services).
-- **Atelier & équipement** : noms des machines et ce qu'elles permettent (section Locaux).
-- **Réalisations** : les 3 exemples actuels sont des gabarits à remplacer par de vrais projets.
+- **Atelier & équipement** : noms des machines (fiche technique) et 2 photos restantes (machine
+  en gros plan, zone de finition/découpe) — toujours des gabarits.
 - **Formulaire** : remplacer `VOTRE_ID_FORMSPREE` dans l'attribut `action` du formulaire par
   l'identifiant obtenu sur [formspree.io](https://formspree.io) (compte gratuit jusqu'à 50 envois/mois).
-- **Photos** : tous les fichiers dans `assets/images/placeholders/` sont des gabarits
-  (fond hachuré + légende). Les remplacer par de vraies photos de l'atelier et des réalisations,
-  idéalement en **WebP** avec fallback JPEG :
-  ```html
-  <picture>
-    <source srcset="assets/images/atelier-1.webp" type="image/webp">
-    <img src="assets/images/atelier-1.jpg" alt="…" width="800" height="600" loading="lazy">
-  </picture>
-  ```
 - [x] **URL du site** : `https://www.cs-creatives.net/` (canonical, Open Graph, sitemap.xml,
   robots.txt). Si le domaine final change, remplacer cette valeur partout.
 
